@@ -2,6 +2,9 @@ import network
 import socket
 import time
 import io
+import pinout # For board specific pin constants
+from micropython import const
+from machine import SPI, Pin
 
 with io.open('www/config.html', 'r', encoding="utf-8") as f:
     config_html = f.read()
@@ -17,8 +20,13 @@ http_response_header='HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n'
 ssid = 'AdBinder'
 psk = 'default1'
 
-WPA2_PSK = 3 # Authmode for WLAN IF
-print(config_html)
+WPA2_PSK = const(3) # Authmode for WLAN IF
+
+#Setup the high speed SPI bus
+cs = Pin(pinout.CS, mode=Pin.OUT, value=1)
+hspi = SPI(1, 10000000, sck=Pin(pinout.CLK), mosi=Pin(pinout.MOSI), miso=Pin(pinout.MISO))
+eth = network.WIZNET5k(hspi, cs, None)
+print(eth.ifconfig())
 network.phy_mode(network.MODE_11N)
 wlan = network.WLAN(network.AP_IF)
 wlan.active(True)
