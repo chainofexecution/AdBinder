@@ -1,4 +1,4 @@
-# For CircuitPython v7.3.x+ only!
+# For CircuitPython v8.0.0-beta3+ only!
 # AdBinder an ESP32 CircuitPython implementation of DNS level ad blocking.
 # Authors: Ian Moyer (chainofexecution), Jack LaRussa (xtyphus)
 # License: GPU General Public License v3.0
